@@ -210,7 +210,7 @@ public final class Album extends Element {
 		
 		//TODO implement this
 		Stack<Genre> finderStack = new Stack<Genre>();
-		//I mean, it makes sense: if there aren't any main genres, can't find shit
+		//I mean, it makes sense: if there aren't any main genres, can't find anything
 		if(Catalogue.mainGenres == null){
 			return null;
 		}

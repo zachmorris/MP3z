@@ -33,7 +33,7 @@ public class AlbumTest {
 			j = temp.lastIndexOf("<genre>");
 			
 			//'ppears you need a catalogue to do such things
-			//NOT ANYMORE (Kirby's gon steal your bitch)
+			
 			temp = temp.substring(temp.indexOf("</genre>") + 8 );
 		}while(i < j);
 		
