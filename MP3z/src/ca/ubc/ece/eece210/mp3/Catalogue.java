@@ -1,5 +1,7 @@
 package ca.ubc.ece.eece210.mp3;
 
+import java.util.ArrayList;
+
 /**
  * Container class for all the albums and genres. Its main 
  * responsibility is to save and restore the collection from a file.
@@ -8,7 +10,10 @@ package ca.ubc.ece.eece210.mp3;
  * 
  */
 public final class Catalogue {
-
+	//holds all our top level genres?
+	//would it hurt if this was static?
+	static ArrayList<Genre> mainGenres;
+	
 	/**
 	 * Builds a new, empty catalogue.
 	 */
@@ -33,5 +38,13 @@ public final class Catalogue {
 	 */
 	public void saveCatalogueToFile(String fileName) {
 		// TODO implement
+		//file i/o up in here
+	}
+	
+	/**
+	 * 
+	 */
+	public void recreateLibraryFromFile(String fileName){
+		
 	}
 }
