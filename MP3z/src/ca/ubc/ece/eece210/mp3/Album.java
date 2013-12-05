@@ -17,7 +17,7 @@ public final class Album extends Element {
 	private String performer;
 	private ArrayList<String> songlist = new ArrayList<String>();
 	//parentGenre = unclassified; //TODO HOW DO UNCLASSIFIED
-	//TODO might wanna have a way to access the songlist?
+	
 		
 	/**
 	 * Builds an album with the given title, performer and song list
@@ -27,11 +27,9 @@ public final class Album extends Element {
 	 * @param songlist the ArrayList of songs in the album
 	 */
 	public Album(String title, String performer, ArrayList<String> songlist) {
-		
 		this.title = title;
 		this.performer = performer;
-		this.songlist = songlist;
-		
+		this.songlist = songlist;		
 	}
 
 	/**
@@ -41,13 +39,9 @@ public final class Album extends Element {
 	 * @param stringRepresentation the string representation
 	 */
 	public Album(String stringRepresentation) {
-		// TODO implement this
 		int i, j;
-		String genreName;
-		String temp;
-		String temp2;
-		Genre tempGenre = null;
-		Genre currentGenre = null;
+		String genreName, temp, tempShort;
+		Genre tempGenre, currentGenre = null;
 		Album currentAlbum = this;
 		
 		this.title = stringRepresentation.split("<title>")[1].split("</title>")[0];
@@ -58,10 +52,10 @@ public final class Album extends Element {
 			i = temp.lastIndexOf("<genre>");
 			j = temp.indexOf("<genre>");
 			
-			temp2 = temp.substring(temp.lastIndexOf("<genre>"), 
+			tempShort = temp.substring(temp.lastIndexOf("<genre>"), 
 					temp.lastIndexOf("</genre>"));
 						
-			genreName = temp2.split("<genre>")[1].split("</genre>")[0];
+			genreName = tempShort.split("<genre>")[1].split("</genre>")[0];
 		
 			tempGenre = findGenre(genreName);
 						
@@ -80,9 +74,9 @@ public final class Album extends Element {
 				}				
 			}
 			if(currentGenre != null){
-				//I think we need to do a little more here
+				
 				if(genreName != null && tempGenre != null){
-					//who is adding who here
+				
 					tempGenre.addToGenre(currentGenre);					
 				}
 				else if(genreName != null && tempGenre == null){
@@ -122,8 +116,7 @@ public final class Album extends Element {
 	 * @return the string representation of the album
 	 */
 	public String getStringRepresentation() {
-		// TODO this needs to go to a file, apparently?
-		// TODO needs to list ALL genres it belongs to? chickity check
+		
 		Object[] songlistArrayed;
 		songlistArrayed = songlist.toArray();
 		Genre temp;
@@ -132,9 +125,6 @@ public final class Album extends Element {
 		StringBuilder builder = new StringBuilder();
 		
 		temp = parentGenre;		
-		//it's probably easier to do it this way than another
-		//as in, this is easier than reversed
-		//probably makes more sense to go reversed
 		
 		while(temp != null){
 			builder.insert(0, "<genre>" + temp.getName() + "</genre>\n");
@@ -162,25 +152,20 @@ public final class Album extends Element {
 	 *            the genre to add the album to.
 	 */
 	public void addToGenre(Genre genre) {
-		// TODO implement this
 		
 		if(this.parentGenre == null){ 
 			genre.addToGenre(this);		
 			parentGenre = genre; 
-		}
-		
-			
+		}			
 	}
 	
 	/**
 	 * Remove the album from the genre
 	 * 
 	 * @return removes the album from its genre
-	 * TODO should this method do anything else, like throw an exception
-	 * 		or like return false or something
+	 * 
 	 */
 	public void removeFromGenre() {
-		// TODO implement this
 		
 		if(parentGenre != null){
 			parentGenre.removeFromGenre(this);
@@ -195,7 +180,7 @@ public final class Album extends Element {
 	 * @return the genre that this album belongs to
 	 */
 	public Genre getGenre() {
-		// TODO implement this
+		
 		return parentGenre;
 	}
 
@@ -205,7 +190,7 @@ public final class Album extends Element {
 	 * @return the title
 	 */
 	public String getTitle() {
-		// TODO implement this
+
 		return title;
 	}
 
@@ -215,7 +200,6 @@ public final class Album extends Element {
 	 * @return the performer
 	 */
 	public String getPerformer() {
-		// TODO implement this
 		
 		return performer;
 	}
@@ -234,45 +218,34 @@ public final class Album extends Element {
 	 * @return the genre that the album belongs to, or null if none
 	 * @throws NullPointerException if the name of the genre is null
 	 */
-	public Genre findGenre(String genreName) throws NullPointerException{
+	public static Genre findGenre(String genreName) throws NullPointerException{
 		
-		//TODO implement this
 		Stack<Genre> finderStack = new Stack<Genre>();
-		//I mean, it makes sense: if there aren't any main genres, can't find anything
-		//I feel like I'm forgetting to change an important reference somewhere
+		Genre temp;
+		
 		if(Catalogue.mainGenres.isEmpty()){
 			
 			return null;			
 		}
 		
 		finderStack.addAll(Catalogue.mainGenres);
-		Genre temp;
 		
 		while(!finderStack.isEmpty()){
 			
-			temp = finderStack.pop();
+			temp = finderStack.pop();	
 			
-			if(temp.getName().equals(genreName)){
-				
+			if(temp.getName().equals(genreName)){				
 				return temp;
-			}
-			
+			}			
 			else{
-				int i;
-				
-				for(i = 0; i < temp.getChildren().size(); i++){
-					
-					if(temp.getChildren().get(i).hasChildren() == true){
-						
-						finderStack.add((Genre) temp.getChildren().get(i));
-						
+				int i;				
+				for(i = 0; i < temp.getChildren().size(); i++){					
+					if(temp.getChildren().get(i).hasChildren() == true){						
+						finderStack.add((Genre) temp.getChildren().get(i));						
 					}					
 				}				
 			}			
-		}		
-		
+		}				
 		return null;
-	}
-	
-	
+	}	
 }

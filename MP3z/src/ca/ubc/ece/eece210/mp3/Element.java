@@ -69,7 +69,7 @@ public abstract class Element {
 		//if the thing to which we are trying to add a kid can't have kids,
 		//then we throw the exception
 		//aggro crag wait for you is he's
-		if(this.hasChildren() == false){
+		if(!this.hasChildren()){
 			throw new IllegalArgumentException();
 		}
 		
