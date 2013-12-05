@@ -1,4 +1,6 @@
 <album>
+<genre>Rock</genre>
+<genre>Alternative Rock</genre>
 <genre>Garage Rock</genre>
 <title>Brothers</title>
 <performer>The Black Keys</performer>

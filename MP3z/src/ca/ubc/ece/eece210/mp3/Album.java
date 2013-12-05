@@ -18,7 +18,7 @@ public final class Album extends Element {
 	private String performer;
 	private ArrayList<String> songlist = new ArrayList<String>();
 	//parentGenre = unclassified; //TODO HOW DO UNCLASSIFIED
-	//TODO might wanna have a snglist?
+	//TODO might wanna have a way to access the songlist?
 		
 	/**
 	 * Builds an album with the given title, performer and song list
@@ -49,7 +49,7 @@ public final class Album extends Element {
 		
 		this.title = stringRepresentation.split("<title>")[1].split("</title>")[0];
 		
-		//this code is for iterating through the genres from top to bottom
+		
 		temp = stringRepresentation;
 		
 		//do{
@@ -57,6 +57,8 @@ public final class Album extends Element {
 			//j = temp.lastIndexOf("<genre>");
 			
 		genreName = temp.split("<genre>")[1].split("</genre>")[0];
+		//f it, let's use variables
+		
 		
 		//	temp = temp.substring(temp.indexOf("</genre>") + 8 );
 		//}while(i < j);
@@ -64,14 +66,12 @@ public final class Album extends Element {
 	
 		//this code is for one genre
 		if(genreName != null && findGenre(genreName) != null){
-			addToGenre(findGenre(genreName));
-			
+			addToGenre(findGenre(genreName));			
 		}
 		else if(genreName != null && findGenre(genreName) == null){
 			//create new genre
 			parentGenre = new Genre(genreName);
-			System.out.println("this is the new parent genre: " + parentGenre.toString());
-			System.out.println("this is its name: " + parentGenre.getName());
+			
 		}
 		else{
 			//this means that our string rep had no genre
@@ -253,5 +253,6 @@ public final class Album extends Element {
 		
 		return null;
 	}
+	
 	
 }

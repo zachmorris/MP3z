@@ -75,7 +75,7 @@ public abstract class Element {
 		
 		children.remove(b);
 	}
-
+	
 	/**
 	 * Abstract method to determine if a given entity can (or cannot) contain
 	 * any children.
