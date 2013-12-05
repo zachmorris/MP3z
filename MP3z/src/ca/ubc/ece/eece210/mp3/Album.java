@@ -1,7 +1,6 @@
 package ca.ubc.ece.eece210.mp3;
 
 import java.util.ArrayList;
-
 import java.util.Stack;
 
 /**
@@ -46,39 +45,62 @@ public final class Album extends Element {
 		int i, j;
 		String genreName;
 		String temp;
+		String temp2;
+		Genre tempGenre = null;
+		Genre currentGenre = null;
+		Album currentAlbum = this;
 		
 		this.title = stringRepresentation.split("<title>")[1].split("</title>")[0];
 		
-		
 		temp = stringRepresentation;
 		
-		//do{
-		//	i = temp.indexOf("<genre>");
-			//j = temp.lastIndexOf("<genre>");
+		do{
+			i = temp.lastIndexOf("<genre>");
+			j = temp.indexOf("<genre>");
 			
-		genreName = temp.split("<genre>")[1].split("</genre>")[0];
-		//f it, let's use variables
+			temp2 = temp.substring(temp.lastIndexOf("<genre>"), 
+					temp.lastIndexOf("</genre>"));
+						
+			genreName = temp2.split("<genre>")[1].split("</genre>")[0];
 		
-		
-		//	temp = temp.substring(temp.indexOf("</genre>") + 8 );
-		//}while(i < j);
-		//this code is for iterating through the genres from top to bottom
-	
-		//this code is for one genre
-		if(genreName != null && findGenre(genreName) != null){
-			addToGenre(findGenre(genreName));			
-		}
-		else if(genreName != null && findGenre(genreName) == null){
-			//create new genre
-			parentGenre = new Genre(genreName);
-			
-		}
-		else{
-			//this means that our string rep had no genre
-			parentGenre = null; //TODO make unclassified?
-			
-		}
-		//this code is for one genre
+			tempGenre = findGenre(genreName);
+						
+			if(currentAlbum != null){
+				
+				if(genreName != null && tempGenre != null){
+					currentAlbum.addToGenre(tempGenre);										
+				}
+				else if(genreName != null && tempGenre == null){
+					//create new genre
+					currentAlbum.parentGenre = new Genre(genreName);
+				}
+				else{
+					//this means that our string rep had no genre
+					currentAlbum.parentGenre = null; //TODO make unclassified?					
+				}				
+			}
+			if(currentGenre != null){
+				//I think we need to do a little more here
+				if(genreName != null && tempGenre != null){
+					//who is adding who here
+					tempGenre.addToGenre(currentGenre);					
+				}
+				else if(genreName != null && tempGenre == null){
+					//create new genre
+					currentGenre.parentGenre = new Genre(genreName);					
+				}
+				else{
+					//this means that our string rep had no genre
+					currentGenre.parentGenre = null; //TODO make unclassified?					
+				}				
+				currentGenre = tempGenre;				
+			}
+			if(currentAlbum != null && currentGenre == null){
+				currentGenre = currentAlbum.parentGenre;
+				currentAlbum = null;				
+			}			
+			temp = temp.substring(temp.indexOf("<genre>"), temp.lastIndexOf("<genre>"));			
+		}while(j < i);
 		
 		this.performer = stringRepresentation.split("<performer>")[1].split("</performer>")[0];
 		
@@ -86,12 +108,10 @@ public final class Album extends Element {
 			i = stringRepresentation.indexOf("<song>");
 			j = stringRepresentation.lastIndexOf("<song>");
 			
-			this.songlist.add(stringRepresentation.split("<song>")[1].split("</song>")[0]);
-			
+			this.songlist.add(stringRepresentation.split("<song>")[1].split("</song>")[0]);			
 			
 			stringRepresentation = stringRepresentation.substring(stringRepresentation.indexOf("</song>") + 7 );
-		}while(i < j);
-		
+		}while(i < j);		
 	}
 
 	/**
