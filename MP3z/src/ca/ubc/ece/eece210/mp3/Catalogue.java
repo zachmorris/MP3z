@@ -12,7 +12,8 @@ import java.util.ArrayList;
 public final class Catalogue {
 	//holds all our top level genres?
 	//would it hurt if this was static?
-	static ArrayList<Genre> mainGenres;
+	//would it hurt if this was empty rather than null?
+	static ArrayList<Genre> mainGenres = new ArrayList<Genre>();
 	
 	/**
 	 * Builds a new, empty catalogue.

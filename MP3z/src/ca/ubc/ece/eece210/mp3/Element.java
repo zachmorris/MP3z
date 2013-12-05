@@ -13,12 +13,7 @@ import java.util.List;
 public abstract class Element {
 	//arrayList or LinkedList here?
 	ArrayList<Element> children = new ArrayList<Element>();
-	Genre parentGenre;// = new Genre("unclassified");  -  should this be a thing?
-	//I think automatically set to unclassified might be a bad idea. what about 
-	//top level stuff, like rock and/or roll? PARENT GENRE UNCLASSIFIED
-	//what about setting it at the album level?
-	//sounds good
-	//sounds bad
+	Genre parentGenre;
 	
 	/**
 	 * Returns all the children of this entity. They can be albums or

@@ -17,7 +17,8 @@ public final class Album extends Element {
 	private String title;
 	private String performer;
 	private ArrayList<String> songlist = new ArrayList<String>();
-	//TODO parentGenre = unclassified; HOW DO UNCLASSIFIED
+	//parentGenre = unclassified; //TODO HOW DO UNCLASSIFIED
+	//TODO might wanna have a snglist?
 		
 	/**
 	 * Builds an album with the given title, performer and song list
@@ -47,7 +48,7 @@ public final class Album extends Element {
 		String temp;
 		
 		this.title = stringRepresentation.split("<title>")[1].split("</title>")[0];
-
+		
 		//this code is for iterating through the genres from top to bottom
 		temp = stringRepresentation;
 		
@@ -55,20 +56,27 @@ public final class Album extends Element {
 		//	i = temp.indexOf("<genre>");
 			//j = temp.lastIndexOf("<genre>");
 			
-			genreName = temp.split("<genre>")[1].split("</genre>")[0];
-			
+		genreName = temp.split("<genre>")[1].split("</genre>")[0];
+		
 		//	temp = temp.substring(temp.indexOf("</genre>") + 8 );
 		//}while(i < j);
 		//this code is for iterating through the genres from top to bottom
 	
 		//this code is for one genre
 		if(genreName != null && findGenre(genreName) != null){
-			parentGenre = findGenre(genreName);
+			addToGenre(findGenre(genreName));
+			
+		}
+		else if(genreName != null && findGenre(genreName) == null){
+			//create new genre
+			parentGenre = new Genre(genreName);
+			System.out.println("this is the new parent genre: " + parentGenre.toString());
+			System.out.println("this is its name: " + parentGenre.getName());
 		}
 		else{
-			//f it, assume genres are created first.
 			//this means that our string rep had no genre
 			parentGenre = null; //TODO make unclassified?
+			
 		}
 		//this code is for one genre
 		
@@ -211,8 +219,10 @@ public final class Album extends Element {
 		//TODO implement this
 		Stack<Genre> finderStack = new Stack<Genre>();
 		//I mean, it makes sense: if there aren't any main genres, can't find anything
-		if(Catalogue.mainGenres == null){
-			return null;
+		//I feel like I'm forgetting to change an important reference somewhere
+		if(Catalogue.mainGenres.isEmpty()){
+			
+			return null;			
 		}
 		
 		finderStack.addAll(Catalogue.mainGenres);
@@ -222,7 +232,7 @@ public final class Album extends Element {
 			
 			temp = finderStack.pop();
 			
-			if(temp.getName() == genreName){
+			if(temp.getName().equals(genreName)){
 				
 				return temp;
 			}
@@ -235,10 +245,12 @@ public final class Album extends Element {
 					if(temp.getChildren().get(i).hasChildren() == true){
 						
 						finderStack.add((Genre) temp.getChildren().get(i));
+						
 					}					
 				}				
 			}			
 		}		
+		
 		return null;
 	}
 	

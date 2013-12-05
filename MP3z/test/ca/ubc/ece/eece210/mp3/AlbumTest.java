@@ -2,42 +2,24 @@ package ca.ubc.ece.eece210.mp3;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
+import java.io.*;
 
 import org.junit.Test;
 
 public class AlbumTest {
 
 	@Test
-	public void notReallyATest(){
-		//alright, we have to find out how to call all the parent genres
-		//just parent genre in a for loop, eh?
-		Genre rock = new Genre("rock");
-		Genre alternative = new Genre("alternative");
-		Genre garage = new Genre("Garage");
-		Album brothers = createTestAlbum();
-		String temp;
-		String tempGenreName;
-		int i, j;
+	public void notReallyATest() throws FileNotFoundException{
+		//so, we need to see if there is any adverse impact to creating
+		//a horrible genre without names
 		
-		rock.addToGenre(alternative);
-		alternative.addToGenre(garage);
-		brothers.addToGenre(garage);
+		String unwieldy = new String("<album><genre>Reggae</genre><title>21</title><performer>Adele</performer><song>Set Fire to the Rain</song></album>");
 		
-		temp = brothers.getStringRepresentation();
+		Album twentyOne = new Album(unwieldy);
+		System.out.println("tewntyOne: " + twentyOne.getStringRepresentation());
 		
-		do{
-			i = temp.indexOf("<genre>");
-			j = temp.lastIndexOf("<genre>");
-			
-			//'ppears you need a catalogue to do such things
-			
-			temp = temp.substring(temp.indexOf("</genre>") + 8 );
-		}while(i < j);
-		
-		
+		fail("not actually a test");
 	}
 	
 	@Test
@@ -86,10 +68,27 @@ public class AlbumTest {
 	}
 	
 	@Test
-	public void testGetAlbumFromString() {
-		//TODO should there be something file-y in here? Find out how to do file
-		//I/O, I guess...
-		fail("Not yet implemented");
+	public void testGetAlbumFromString() throws FileNotFoundException{
+		//TODO implement with multiple genres
+		Scanner input = new Scanner(new File("test data/brothers.txt"));
+		StringBuilder temp = new StringBuilder();
+		Genre rock = new Genre("Rock");
+		Genre alternative = new Genre("Alternative Rock");
+		Genre garage = new Genre("Garage Rock");
+				
+		rock.addToGenre(alternative);
+		alternative.addToGenre(garage);
+		
+		
+		while(input.hasNextLine()){
+			temp.append(input.nextLine());
+		}
+		
+		Album brothersTwo = new Album(temp.toString());
+		
+		System.out.println("testGetAlbum output: " + brothersTwo.getGenre().getName());
+		fail("incomplete");
+		
 	}
 	
 	@Test

@@ -1,0 +1,20 @@
+<album>
+<genre>Garage Rock</genre>
+<title>Brothers</title>
+<performer>The Black Keys</performer>
+<song>Everlasting Light</song>
+<song>Next Girl</song>
+<song>Tighten Up</song>
+<song>Howling For You</song>
+<song>She's Long Gone</song>
+<song>Black Mud</song>
+<song>The Only One</song>
+<song>Too Afraid To Love You</song>
+<song>Ten Cent Pistol</song>
+<song>Sinister Kid</song>
+<song>The Go Getter</song>
+<song>I'm Not The One</song>
+<song>Unknown Brother</song>
+<song>Never Gonna Give You Up</song>
+<song>These Days</song>
+</album>

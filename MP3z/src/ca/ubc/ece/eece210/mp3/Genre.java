@@ -11,6 +11,7 @@ package ca.ubc.ece.eece210.mp3;
 public final class Genre extends Element {
 	//or should we have an array list here?
 	//if we have children in Element, we don't need it here
+	
 	String name;
 	
 	/**
@@ -21,6 +22,8 @@ public final class Genre extends Element {
 	 */
 	public Genre(String name) {
 		this.name = name;
+		//default is a mainGenre
+		Catalogue.mainGenres.add(this);
 	}
 
 	/**
@@ -64,9 +67,10 @@ public final class Genre extends Element {
 	 *            the element to be added to the collection.
 	 */
 	public void addToGenre(Element b) {
-		//if the genre doesn't have a parent already
-		//if the album doesn't have a genre already
+	
 		if(b.hasChildren() == true){
+			//so it seems this works
+			Catalogue.mainGenres.remove(b);
 			b.parentGenre = this;
 		}
 		this.addChild(b);
